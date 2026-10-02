@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "aisavedev-tests",
+  "version": "0.0.0",
+  "type": "commonjs",
+  "description": "Offline regression tests for the AiSaveDev content script.",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.1"
+  }
+}
