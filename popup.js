@@ -20,6 +20,7 @@ const PLATFORM_RULES = [
   { pattern: /grok\.com|x\.com\/i\/grok|twitter\.com\/i\/grok/, id: 'grok' },
   { pattern: /duck\.ai|duckduckgo\.com\/(duckchat|chat)/,       id: 'duckduckgo-ai' },
   { pattern: /chat\.qwen\.ai|qwen\.ai/,                         id: 'qwen' },
+  { pattern: /getmerlin\.in/,                                     id: 'merlin' },
 ];
 
 const PLATFORM_LABELS = {
@@ -35,6 +36,7 @@ const PLATFORM_LABELS = {
   'grok':          'Grok',
   'duckduckgo-ai': 'DuckDuckGo AI',
   'qwen':          'Qwen Studio',
+  'merlin':        'Merlin',
   'generic':       'Generic site',
   'unsupported':   'Unsupported',
 };
@@ -76,7 +78,7 @@ saveBtn.addEventListener('click', async () => {
 
     const [{ result }] = await chrome.scripting.executeScript({
       target: { tabId: activeTab.id },
-      func: () => window.__aiSaveDev?.scrape() ?? null,
+      func: () => window.__AiSave?.scrape() ?? null,
     });
 
     if (!result) throw new Error('Content script did not respond.');

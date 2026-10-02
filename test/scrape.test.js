@@ -12,7 +12,7 @@ const path = require('node:path');
 const { JSDOM } = require('jsdom');
 
 const {
-  installAiSaveDev,
+  installAiSave,
   extractFrontmatter,
   extractTurnMarkers,
   extractEndMarker,
@@ -43,8 +43,8 @@ function scrapeFixture() {
     runScripts: 'outside-only',
     virtualConsole: quietVirtualConsole,
   });
-  const aiSaveDev = installAiSaveDev(dom.window);
-  const result = aiSaveDev.scrape();
+  const AiSave = installAiSave(dom.window);
+  const result = AiSave.scrape();
   dom.window.close();
   return result;
 }

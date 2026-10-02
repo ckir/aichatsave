@@ -1,8 +1,8 @@
 'use strict';
 
 // Guard against double-injection across multiple popup opens in the same tab
-if (!window.__aiSaveDev) {
-  window.__aiSaveDev = (() => {
+if (!window.__AiSave) {
+  window.__AiSave = (() => {
 
     // ── Platform registry ─────────────────────────────────────────────────────
     // Order matters: more specific URL patterns must come before broader ones.
@@ -68,6 +68,11 @@ if (!window.__aiSaveDev) {
         id: 'qwen',
         test: u => /chat\.qwen\.ai|qwen\.ai/.test(u),
         scrape: scrapeQwen,
+      },
+      {
+        id: 'merlin',
+        test: u => /getmerlin\.in/.test(u),
+        scrape: scrapeMerlin,
       },
     ];
 
@@ -613,6 +618,36 @@ if (!window.__aiSaveDev) {
       return messages?.length ? { title, messages } : scrapeGeneric();
     }
 
+    function scrapeMerlin() {
+      const rawTitle =
+        cleanTitle(document.title, /\s*[-–|]\s*Merlin.*$/i) ||
+        cleanTitle(document.title, /^Merlin\s*[-–|]\s*/i) ||
+        null;
+      // document.title on Merlin is a generic "Chat - Merlin AI" on both the
+      // first-question page (/) and /chat/<uuid> pages, so a bare "Chat"
+      // carries no conversation info — fall back like the other scrapers do.
+      const title = rawTitle && !/^chat$/i.test(rawTitle)
+        ? rawTitle
+        : 'Merlin AI Conversation';
+
+      // Merlin (www.getmerlin.in) renders every turn as <article data-message-id>.
+      // Both the first-question page (/) and follow-up pages (/chat/<uuid>) share
+      // the same DOM: user turns carry .ml-auto, assistant turns do not and keep
+      // the response markdown in a div.max-w-full, while the model label
+      // ("Merlin Magic") and reasoning blocks ("Thought", "Searched the web")
+      // live in sibling div.grid accordions that must be excluded.
+      const messages = scrapeByTurns(
+        [
+          'article[data-message-id].ml-auto',
+        ],
+        [
+          'article[data-message-id]:not(.ml-auto) div.max-w-full',
+        ]
+      );
+
+      return messages?.length ? { title, messages } : scrapeGeneric();
+    }
+
     function scrapeGeneric() {
       const title = document.title.trim() || 'Conversation';
 
@@ -694,7 +729,7 @@ if (!window.__aiSaveDev) {
 
     // ── Markdown assembly ──────────────────────────────────────────────────────
 
-    // AiSaveDev: every turn is preceded by a marker line carrying a random per-save nonce, and the
+    // AiSave: every turn is preceded by a marker line carrying a random per-save nonce, and the
     // file ends with an end marker. A reply's own text can contain "## Assistant" or "---" (AiSave's
     // turn heading and separator), but it cannot contain this file's nonce, which is generated after
     // the page text exists. Consumers (review-relay) split on the markers when `format: aisave-dev/1`.

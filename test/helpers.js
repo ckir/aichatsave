@@ -1,6 +1,6 @@
 'use strict';
 
-// Shared helpers for the AiSaveDev offline regression tests. This file does NOT modify
+// Shared helpers for the AiSave offline regression tests. This file does NOT modify
 // content.js; it only loads and evaluates the real, unmodified source inside a jsdom window
 // and parses the aisave-dev/1 markdown it produces.
 
@@ -14,8 +14,8 @@ function loadContentJsSource() {
 }
 
 // Evaluates the unmodified content.js source inside the given jsdom window and returns
-// window.__aiSaveDev. Throws if the guard somehow left it undefined.
-function installAiSaveDev(window) {
+// window.__AiSave. Throws if the guard somehow left it undefined.
+function installAiSave(window) {
   if (typeof window.crypto?.getRandomValues !== 'function') {
     // jsdom (Node 20+) ships window.crypto with getRandomValues natively; this is a
     // defensive fallback only, not exercised on the versions this repo targets.
@@ -24,10 +24,10 @@ function installAiSaveDev(window) {
     window.crypto.getRandomValues = arr => nodeCrypto.webcrypto.getRandomValues(arr);
   }
   window.eval(loadContentJsSource());
-  if (!window.__aiSaveDev) {
-    throw new Error('content.js did not install window.__aiSaveDev');
+  if (!window.__AiSave) {
+    throw new Error('content.js did not install window.__AiSave');
   }
-  return window.__aiSaveDev;
+  return window.__AiSave;
 }
 
 // Parses the `---\n...\n---` frontmatter block into a plain object of raw string values
@@ -106,7 +106,7 @@ function firstDifferingLine(a, b) {
 module.exports = {
   CONTENT_JS_PATH,
   loadContentJsSource,
-  installAiSaveDev,
+  installAiSave,
   extractFrontmatter,
   extractTurnMarkers,
   extractEndMarker,

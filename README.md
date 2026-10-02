@@ -93,6 +93,7 @@ AiSave (like AiSave) includes specialized support for:
 - **Grok** (x.com/twitter.com integration)
 - **DuckDuckGo AI**
 - **Qwen Studio** (`chat.qwen.ai`, `qwen.ai`)
+- **Merlin** (`getmerlin.in`)
 - **Generic Support**: A fallback scraper for other sites using common web patterns.
 
 ## Installation

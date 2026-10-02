@@ -9,7 +9,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { JSDOM } = require('jsdom');
 
-const { installAiSaveDev, extractTurnMarkers, extractEndMarker } = require('./helpers');
+const { installAiSave, extractTurnMarkers, extractEndMarker } = require('./helpers');
 
 const SYNTHETIC_URL = 'https://chatgpt.com/c/00000000-0000-0000-0000-000000000000';
 
@@ -33,8 +33,8 @@ const SYNTHETIC_HTML = `<!doctype html>
 
 function scrapeSynthetic() {
   const dom = new JSDOM(SYNTHETIC_HTML, { url: SYNTHETIC_URL, runScripts: 'outside-only' });
-  const aiSaveDev = installAiSaveDev(dom.window);
-  const result = aiSaveDev.scrape();
+  const AiSave = installAiSave(dom.window);
+  const result = AiSave.scrape();
   dom.window.close();
   return result;
 }

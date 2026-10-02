@@ -50,6 +50,7 @@ body {
 .badge.generic        { background: #e5e7eb; color: #374151; }
 .badge.error          { background: #fee2e2; color: #991b1b; }
 .badge.qwen           { background: #f3e8ff; color: #7c3aed; }
+.badge.merlin         { background: #e0e7ff; color: #3730a3; }
 
 .save-btn {
   display: flex;

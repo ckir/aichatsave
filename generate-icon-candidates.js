@@ -1,5 +1,5 @@
 /**
- * Generates 4 modern-minimal candidate icon sets for AiSaveDev.
+ * Generates 4 modern-minimal candidate icon sets for AiSave.
  * Run: node generate-icon-candidates.js
  * Output: icons/candidates/set-A|B|C|D/icon{16,48,128}.png + preview.html
  * No external deps - pure Node + zlib, supersampled for smooth edges.
@@ -283,7 +283,7 @@ const cards = Object.entries(SETS).map(([name, set]) => `
   </div>`).join('\n');
 
 fs.writeFileSync(path.join(outBase, 'preview.html'), `<!doctype html><meta charset="utf-8">
-<title>AiSaveDev icon candidates</title>
+<title>AiSave icon candidates</title>
 <style>
 body{font-family:system-ui,sans-serif;background:#f4f4f5;margin:24px;color:#18181b}
 .card{background:#fff;border:1px solid #e4e4e7;border-radius:12px;padding:16px;margin-bottom:16px;max-width:640px}
@@ -295,7 +295,7 @@ body{font-family:system-ui,sans-serif;background:#f4f4f5;margin:24px;color:#1818
 .light{background:#fff;border:1px solid #d4d4d8}
 .dark{background:#27272a;color:#fff;border:1px solid #3f3f46}
 </style>
-<h1>AiSaveDev — icon candidates (modern minimal)</h1>
+<h1>AiSave — icon candidates (modern minimal)</h1>
 <p>Compare at real toolbar size (16px) and zoomed. Tell me the winner (A/B/C/D) and I'll install it to <code>icons/icon*.png</code>.</p>
 ${cards}`);
 console.log('Created preview.html');

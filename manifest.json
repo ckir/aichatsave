@@ -1,13 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "AiSaveDev",
+  "name": "AiSave",
   "version": "1.0.0",
-  "description": "Save AI conversations as markdown files with unambiguous per-turn markers (AiSave variant for review-relay)",
+  "description": "Save AI conversations as markdown files with unambiguous per-turn markers)",
   "permissions": ["activeTab", "downloads", "scripting"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "AiSaveDev",
+    "default_title": "AiSave",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
